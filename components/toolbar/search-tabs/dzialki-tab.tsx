@@ -15,6 +15,7 @@ import {
   useTheme,
 } from "@mui/material"
 import { Storage } from "@mui/icons-material"
+import { useMUILabels } from "@/hooks/use-mui-labels"
 
 interface DzialkiTabProps {
   onSearch: (type: string, data: any) => void
@@ -25,6 +26,7 @@ export function DzialkiTab({ onSearch, onZoom }: DzialkiTabProps) {
   const [selectedObreb, setSelectedObreb] = useState("")
   const [selectedNumer, setSelectedNumer] = useState("")
   const theme = useTheme()
+  const { buttons, forms } = useMUILabels()
 
   const handleSearch = () => {
     onSearch("działki", { obreb: selectedObreb, numer: selectedNumer })
@@ -44,8 +46,15 @@ export function DzialkiTab({ onSearch, onZoom }: DzialkiTabProps) {
         <Grid container spacing={2} sx={{ mb: 3 }}>
           <Grid item xs={12} md={6}>
             <FormControl fullWidth size="small">
-              <InputLabel>Obręb działki</InputLabel>
-              <Select value={selectedObreb} onChange={(e) => setSelectedObreb(e.target.value)} label="Obręb działki">
+              <InputLabel id="obreb-select-label">Obręb działki</InputLabel>
+              <Select
+                value={selectedObreb}
+                onChange={(e) => setSelectedObreb(e.target.value)}
+                label="Obręb działki"
+                labelId="obreb-select-label"
+                aria-label="Wybierz obręb działki"
+                aria-describedby="obreb-help-text"
+              >
                 <MenuItem value="obreb1">Obręb 1</MenuItem>
                 <MenuItem value="obreb2">Obręb 2</MenuItem>
                 <MenuItem value="obreb3">Obręb 3</MenuItem>
@@ -56,8 +65,15 @@ export function DzialkiTab({ onSearch, onZoom }: DzialkiTabProps) {
 
           <Grid item xs={12} md={6}>
             <FormControl fullWidth size="small">
-              <InputLabel>Numer działki</InputLabel>
-              <Select value={selectedNumer} onChange={(e) => setSelectedNumer(e.target.value)} label="Numer działki">
+              <InputLabel id="numer-select-label">Numer działki</InputLabel>
+              <Select
+                value={selectedNumer}
+                onChange={(e) => setSelectedNumer(e.target.value)}
+                label="Numer działki"
+                labelId="numer-select-label"
+                aria-label="Wybierz numer działki"
+                aria-describedby="numer-help-text"
+              >
                 <MenuItem value="123/1">123/1</MenuItem>
                 <MenuItem value="124/2">124/2</MenuItem>
                 <MenuItem value="125/3">125/3</MenuItem>
@@ -71,6 +87,8 @@ export function DzialkiTab({ onSearch, onZoom }: DzialkiTabProps) {
           <Button
             onClick={handleSearch}
             variant="contained"
+            aria-label={buttons.SEARCH}
+            title={`${buttons.SEARCH} działek`}
             sx={{
               backgroundColor: theme.palette.error.main,
               "&:hover": {

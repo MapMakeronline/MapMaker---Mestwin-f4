@@ -1,5 +1,6 @@
 "use client"
 
+import { AccessibleIconButton } from "@/components/ui/accessible-icon-button"
 import { MaterialIcon } from "@/components/ui/material-icon"
 
 interface ToolbarFooterProps {
@@ -17,29 +18,32 @@ export function ToolbarFooter({
 }: ToolbarFooterProps) {
   return (
     <div className={`flex-shrink-0 flex flex-col items-center py-4 gap-2 ${className}`}>
-      <button
-        className="p-3 hover:bg-secondary/80 rounded text-muted-foreground hover:text-foreground transition-colors"
+      <AccessibleIconButton
         onClick={onSkrotyKlawiszoweClick}
-        title="Skróty klawiszowe"
+        customLabel="Skróty klawiszowe"
+        shortcut="F1"
+        className="p-3 hover:bg-secondary/80 rounded text-muted-foreground hover:text-foreground transition-colors"
       >
         <MaterialIcon name="keyboard_keys" size={24} />
-      </button>
+      </AccessibleIconButton>
 
-      <button
-        className="p-3 hover:bg-secondary/80 rounded text-muted-foreground hover:text-foreground transition-colors"
+      <AccessibleIconButton
         onClick={onKontaktClick}
-        title="Kontakt"
+        labelKey="CONTACT"
+        shortcut="Ctrl+M"
+        className="p-3 hover:bg-secondary/80 rounded text-muted-foreground hover:text-foreground transition-colors"
       >
         <MaterialIcon name="mail" size={24} />
-      </button>
+      </AccessibleIconButton>
 
-      <button
-        className="p-3 hover:bg-secondary/80 rounded text-destructive hover:text-destructive/80 transition-colors"
+      <AccessibleIconButton
         onClick={onSettingsClick}
-        title="Ustawienia"
+        labelKey="SETTINGS"
+        shortcut="Ctrl+,"
+        className="p-3 hover:bg-secondary/80 rounded text-destructive hover:text-destructive/80 transition-colors"
       >
         <MaterialIcon name="settings" size={24} />
-      </button>
+      </AccessibleIconButton>
     </div>
   )
 }

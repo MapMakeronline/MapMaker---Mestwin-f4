@@ -1,6 +1,6 @@
 "use client"
 
-import { IconButton } from "@mui/material"
+import { AccessibleIconButton } from "@/components/ui/accessible-icon-button"
 import { MaterialIcon } from "@/components/ui/material-icon"
 
 interface ToolbarMiddleProps {
@@ -20,9 +20,10 @@ export function ToolbarMiddle({
 }: ToolbarMiddleProps) {
   return (
     <div className={`flex-1 flex flex-col items-center gap-2 overflow-y-auto px-2 py-2 ${className}`}>
-      <IconButton
+      <AccessibleIconButton
         onClick={onWypisWyrysClick}
-        title="Wypis i wyrys"
+        customLabel="Wypis i wyrys"
+        shortcut="Ctrl+E"
         sx={{
           color: "text.secondary",
           "&:hover": {
@@ -32,11 +33,12 @@ export function ToolbarMiddle({
         }}
       >
         <MaterialIcon name="description" size={24} />
-      </IconButton>
+      </AccessibleIconButton>
 
-      <IconButton
+      <AccessibleIconButton
         onClick={onIdentyfikacjaObiektuClick}
-        title="Identyfikacja obiektu"
+        customLabel="Identyfikacja obiektu"
+        shortcut="Ctrl+I"
         sx={{
           color: "text.secondary",
           "&:hover": {
@@ -46,11 +48,12 @@ export function ToolbarMiddle({
         }}
       >
         <MaterialIcon name="info" size={24} />
-      </IconButton>
+      </AccessibleIconButton>
 
-      <IconButton
+      <AccessibleIconButton
         onClick={onWyszukiwanieClick}
-        title="Wyszukiwanie"
+        labelKey="SEARCH"
+        shortcut="Ctrl+F"
         sx={{
           color: "text.secondary",
           "&:hover": {
@@ -60,11 +63,12 @@ export function ToolbarMiddle({
         }}
       >
         <MaterialIcon name="search" size={24} />
-      </IconButton>
+      </AccessibleIconButton>
 
-      <IconButton
+      <AccessibleIconButton
         onClick={onNarzedziaRysowaniaClick}
-        title="Narzędzia rysowania"
+        customLabel="Narzędzia rysowania"
+        shortcut="Ctrl+D"
         sx={{
           color: "text.secondary",
           "&:hover": {
@@ -74,7 +78,7 @@ export function ToolbarMiddle({
         }}
       >
         <MaterialIcon name="draw" size={24} />
-      </IconButton>
+      </AccessibleIconButton>
     </div>
   )
 }

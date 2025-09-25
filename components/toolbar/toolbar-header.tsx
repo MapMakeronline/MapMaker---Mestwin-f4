@@ -1,6 +1,6 @@
 "use client"
 
-import { IconButton } from "@mui/material"
+import { AccessibleIconButton } from "@/components/ui/accessible-icon-button"
 import { MaterialIcon } from "@/components/ui/material-icon"
 
 interface ToolbarHeaderProps {
@@ -10,9 +10,10 @@ interface ToolbarHeaderProps {
 export function ToolbarHeader({ className = "" }: ToolbarHeaderProps) {
   return (
     <div className={`flex-shrink-0 flex flex-col items-center py-4 ${className}`}>
-      <IconButton
+      <AccessibleIconButton
+        labelKey="HOME"
+        shortcut="Alt+H"
         color="error"
-        title="Strona główna"
         sx={{
           color: "error.main",
           "&:hover": {
@@ -21,7 +22,7 @@ export function ToolbarHeader({ className = "" }: ToolbarHeaderProps) {
         }}
       >
         <MaterialIcon name="home" size={24} />
-      </IconButton>
+      </AccessibleIconButton>
     </div>
   )
 }

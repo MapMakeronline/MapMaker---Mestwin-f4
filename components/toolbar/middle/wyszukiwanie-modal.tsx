@@ -4,8 +4,10 @@ import type React from "react"
 
 import { useState } from "react"
 import { Modal } from "@/components/ui/modal"
-import { Tabs, Tab, Box, Card, CardContent, CardHeader, Typography, Chip, Button, useTheme } from "@mui/material"
+import { Tabs, Box, Card, CardContent, CardHeader, Typography, Chip, Button, useTheme } from "@mui/material"
 import { LocationOn } from "@mui/icons-material"
+import { AccessibleTab } from "@/components/ui/accessible-tab"
+import { useMUILabels } from "@/hooks/use-mui-labels"
 
 import { DzialkiTab } from "../search-tabs/dzialki-tab"
 import { SzczegoloweTab } from "../search-tabs/szczegolowe-tab"
@@ -43,6 +45,7 @@ export function WyszukiwanieModal({ isOpen, onClose }: WyszukiwanieModalProps) {
   const [searchResults, setSearchResults] = useState<any[]>([])
   const [tabValue, setTabValue] = useState(0)
   const theme = useTheme()
+  const { buttons, modals } = useMUILabels()
 
   // Mock search results
   const mockResults = [
@@ -88,10 +91,10 @@ export function WyszukiwanieModal({ isOpen, onClose }: WyszukiwanieModalProps) {
           aria-label="search tabs"
           sx={{ borderBottom: 1, borderColor: "divider" }}
         >
-          <Tab label="Działki" />
-          <Tab label="Szczegółowe" />
-          <Tab label="Słowa kluczowe" />
-          <Tab label="Wyszukiwanie globalne" />
+          <AccessibleTab labelKey="PARCELS" index={0} />
+          <AccessibleTab labelKey="DETAILED_SEARCH" index={1} />
+          <AccessibleTab labelKey="KEYWORDS" index={2} />
+          <AccessibleTab labelKey="GLOBAL_SEARCH" index={3} />
         </Tabs>
 
         <TabPanel value={tabValue} index={0}>
@@ -126,6 +129,8 @@ export function WyszukiwanieModal({ isOpen, onClose }: WyszukiwanieModalProps) {
                         variant="outlined"
                         onClick={() => handleZoom(result)}
                         startIcon={<LocationOn />}
+                        aria-label={`${buttons.ZOOM_IN} do ${result.nazwa}`}
+                        title={`${buttons.ZOOM_IN} do obiektu`}
                       >
                         Przybliż
                       </Button>
