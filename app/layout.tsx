@@ -1,10 +1,10 @@
 import type { Metadata } from "next"
 import type React from "react"
 import { Inter, Roboto_Mono } from "next/font/google"
-import "./globals.css"
+import "../styles/globals.css"
 import { ThemeProvider } from "@mui/material/styles"
 import { CssBaseline } from "@mui/material"
-import { theme } from "../lib/theme"
+import { theme } from "../styles/theme"
 
 const inter = Inter({
   variable: "--font-inter",
