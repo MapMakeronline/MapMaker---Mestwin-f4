@@ -1,6 +1,6 @@
 "use client"
 
-import { Modal } from "../ui/modal"
+import { Modal } from "@/components/ui/modal"
 
 interface SkrotyKlawiszoweModalProps {
   isOpen: boolean

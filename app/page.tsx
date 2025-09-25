@@ -4,12 +4,12 @@ import { useState } from "react"
 import { Map } from "@/components/map/map"
 import { LayerTree } from "@/components/layer-tree/layer-tree"
 import { Toolbar } from "@/components/toolbar/toolbar"
-import { SettingsModal } from "@/components/toolbar/settings-modal"
-import { WypisWyrysModal } from "@/components/toolbar/wypis-wyrys-modal"
-import { IdentyfikacjaObiektuModal } from "@/components/toolbar/identyfikacja-obiektu-modal"
-import { WyszukiwanieModal } from "@/components/toolbar/wyszukiwanie-modal"
-import { KontaktModal } from "@/components/toolbar/kontakt-modal"
-import { SkrotyKlawiszoweModal } from "@/components/toolbar/skroty-klawiszowe-modal"
+import { SettingsModal } from "@/components/toolbar/footer/settings-modal"
+import { WypisWyrysModal } from "@/components/toolbar/middle/wypis-wyrys-modal"
+import { IdentyfikacjaObiektuModal } from "@/components/toolbar/middle/identyfikacja-obiektu-modal"
+import { WyszukiwanieModal } from "@/components/toolbar/middle/wyszukiwanie-modal"
+import { KontaktModal } from "@/components/toolbar/footer/kontakt-modal"
+import { SkrotyKlawiszoweModal } from "@/components/toolbar/footer/skroty-klawiszowe-modal"
 
 export default function GISApp() {
   const [isLayerTreeVisible, setIsLayerTreeVisible] = useState(true)

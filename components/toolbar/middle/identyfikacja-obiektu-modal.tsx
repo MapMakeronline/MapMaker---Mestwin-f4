@@ -1,14 +1,14 @@
 "use client"
 
 import { useState } from "react"
-import { Modal } from "../ui/modal"
-import { Button } from "../ui/button"
-import { Label } from "../ui/label"
-import { Textarea } from "../ui/textarea"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card"
-import { Badge } from "../ui/badge"
-import { Separator } from "../ui/separator"
+import { Modal } from "@/components/ui/modal"
+import { Button } from "@/components/ui/button"
+import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Separator } from "@/components/ui/separator"
 import { MapPin, Info, FileText } from "lucide-react"
 
 interface IdentyfikacjaObiektuModalProps {

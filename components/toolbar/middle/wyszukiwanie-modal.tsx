@@ -1,17 +1,17 @@
 "use client"
 
 import { useState } from "react"
-import { Modal } from "../ui/modal"
-import { Button } from "../ui/button"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs"
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
-import { Badge } from "../ui/badge"
+import { Modal } from "@/components/ui/modal"
+import { Button } from "@/components/ui/button"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
 import { MapPin } from "lucide-react"
 
-import { DzialkiTab } from "./search-tabs/dzialki-tab"
-import { SzczegoloweTab } from "./search-tabs/szczegolowe-tab"
-import { SlowaKluczoweTab } from "./search-tabs/slowa-kluczowe-tab"
-import { WyszukiwanieGlobalneTab } from "./search-tabs/wyszukiwanie-globalne-tab"
+import { DzialkiTab } from "../search-tabs/dzialki-tab"
+import { SzczegoloweTab } from "../search-tabs/szczegolowe-tab"
+import { SlowaKluczoweTab } from "../search-tabs/slowa-kluczowe-tab"
+import { WyszukiwanieGlobalneTab } from "../search-tabs/wyszukiwanie-globalne-tab"
 
 interface WyszukiwanieModalProps {
   isOpen: boolean
