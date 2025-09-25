@@ -4,7 +4,7 @@ import { useState } from "react"
 import { Button } from "../../ui/button"
 import { Input } from "../../ui/input"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../ui/card"
-import { FileText, Type } from "lucide-react"
+import { MaterialIcon } from "../../ui/material-icon"
 
 interface SlowaKluczoweTabProps {
   onSearch: (type: string, data: any) => void
@@ -26,7 +26,7 @@ export function SlowaKluczoweTab({ onSearch, onZoom }: SlowaKluczoweTabProps) {
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <FileText className="h-5 w-5" />
+          <MaterialIcon name="description" size={20} />
           Wyszukiwanie słów kluczowych
         </CardTitle>
         <CardDescription>Wpisz tekst, po którym zostaną przeszukane warstwy w projekcie</CardDescription>
@@ -34,7 +34,7 @@ export function SlowaKluczoweTab({ onSearch, onZoom }: SlowaKluczoweTabProps) {
       <CardContent className="space-y-4">
         <div className="space-y-2">
           <div className="flex items-center gap-2 mb-2">
-            <Type className="h-4 w-4" />
+            <MaterialIcon name="text_fields" size={16} />
             <span className="text-sm font-medium">Aa</span>
             <span className="text-sm font-medium">ABC</span>
           </div>

@@ -5,7 +5,7 @@ import { Modal } from "@/components/ui/modal"
 import { Button } from "@/components/ui/button"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Checkbox } from "@/components/ui/checkbox"
-import { X, ChevronLeft, ChevronRight } from "lucide-react"
+import { MaterialIcon } from "@/components/ui/material-icon"
 
 interface Dzialka {
   key: string
@@ -120,7 +120,7 @@ export function WypisWyrysModal({ isOpen, onClose }: WypisWyrysModalProps) {
                   <div className="flex items-center justify-between">
                     <span>{selectedDzialka.numer}</span>
                     <Button variant="ghost" size="sm" onClick={handleRemoveDzialka} className="h-6 w-6 p-0">
-                      <X className="h-4 w-4" />
+                      <MaterialIcon name="close" size={16} />
                     </Button>
                   </div>
                 </TableCell>
@@ -162,7 +162,7 @@ export function WypisWyrysModal({ isOpen, onClose }: WypisWyrysModalProps) {
                   <div className="flex items-center justify-between">
                     <span>{selectedDzialka.numer}</span>
                     <Button variant="ghost" size="sm" onClick={handleRemoveDzialka} className="h-6 w-6 p-0">
-                      <X className="h-4 w-4" />
+                      <MaterialIcon name="close" size={16} />
                     </Button>
                   </div>
                 </TableCell>
@@ -182,14 +182,14 @@ export function WypisWyrysModal({ isOpen, onClose }: WypisWyrysModalProps) {
 
       <div className="flex items-center justify-center space-x-4 py-4">
         <Button variant="ghost" size="sm" disabled>
-          <ChevronLeft className="h-4 w-4" />
+          <MaterialIcon name="chevron_left" size={16} />
         </Button>
         <div className="text-center">
           <div className="underline text-sm">Numer działki: {selectedDzialka?.numer}</div>
           <div className="text-sm text-muted-foreground">Obręb działki: {selectedDzialka?.obreb}</div>
         </div>
         <Button variant="ghost" size="sm" disabled>
-          <ChevronRight className="h-4 w-4" />
+          <MaterialIcon name="chevron_right" size={16} />
         </Button>
       </div>
 

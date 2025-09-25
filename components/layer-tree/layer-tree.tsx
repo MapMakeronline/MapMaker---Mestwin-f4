@@ -1,19 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import {
-  ChevronDown,
-  ChevronRight,
-  Eye,
-  Settings,
-  Plus,
-  Minus,
-  Square,
-  Circle,
-  Target,
-  ChevronLeft,
-  ExternalLink,
-} from "lucide-react"
+import { MaterialIcon } from "@/components/ui/material-icon"
 
 interface LayerTreeProps {
   className?: string
@@ -79,25 +67,25 @@ export function LayerTree({ className = "", isVisible = true, onToggleVisibility
           {/* Toolbar Icons */}
           <div className="flex items-center gap-1 mb-3">
             <button className="p-1 hover:bg-gray-700 rounded">
-              <Eye size={16} />
+              <MaterialIcon name="visibility" className="w-4 h-4" />
             </button>
             <button className="p-1 hover:bg-gray-700 rounded">
-              <Square size={16} />
+              <MaterialIcon name="crop_square" className="w-4 h-4" />
             </button>
             <button className="p-1 hover:bg-gray-700 rounded">
-              <Circle size={16} />
+              <MaterialIcon name="radio_button_unchecked" className="w-4 h-4" />
             </button>
             <button className="p-1 hover:bg-gray-700 rounded">
-              <Plus size={16} />
+              <MaterialIcon name="add" className="w-4 h-4" />
             </button>
             <button className="p-1 hover:bg-gray-700 rounded">
-              <Minus size={16} />
+              <MaterialIcon name="remove" className="w-4 h-4" />
             </button>
             <button className="p-1 hover:bg-gray-700 rounded">
-              <Target size={16} />
+              <MaterialIcon name="my_location" className="w-4 h-4" />
             </button>
             <button className="p-1 hover:bg-gray-700 rounded">
-              <Settings size={16} />
+              <MaterialIcon name="settings" className="w-4 h-4" />
             </button>
           </div>
 
@@ -126,10 +114,10 @@ export function LayerTree({ className = "", isVisible = true, onToggleVisibility
               <span>Obszar Rewitalizacji</span>
               <div className="ml-auto flex gap-1">
                 <button className="p-1 hover:bg-gray-600 rounded">
-                  <Eye size={12} />
+                  <MaterialIcon name="visibility" className="w-3 h-3" />
                 </button>
                 <button className="p-1 hover:bg-gray-600 rounded">
-                  <Settings size={12} />
+                  <MaterialIcon name="settings" className="w-3 h-3" />
                 </button>
               </div>
             </div>
@@ -154,7 +142,11 @@ export function LayerTree({ className = "", isVisible = true, onToggleVisibility
               <div className="flex items-center gap-2 py-1 px-2 hover:bg-gray-700 rounded text-sm">
                 {layer.hasChildren && (
                   <button onClick={() => toggleLayer(layer.name)} className="p-0.5">
-                    {expandedLayers[layer.name] ? <ChevronDown size={12} /> : <ChevronRight size={12} />}
+                    {expandedLayers[layer.name] ? (
+                      <MaterialIcon name="expand_more" className="w-3 h-3" />
+                    ) : (
+                      <MaterialIcon name="chevron_right" className="w-3 h-3" />
+                    )}
                   </button>
                 )}
                 {!layer.hasChildren && <div className="w-4" />}
@@ -168,10 +160,10 @@ export function LayerTree({ className = "", isVisible = true, onToggleVisibility
                 <span className="flex-1">{layer.name}</span>
                 <div className="flex gap-1">
                   <button className="p-1 hover:bg-gray-600 rounded">
-                    <Eye size={12} />
+                    <MaterialIcon name="visibility" className="w-3 h-3" />
                   </button>
                   <button className="p-1 hover:bg-gray-600 rounded">
-                    <Settings size={12} />
+                    <MaterialIcon name="settings" className="w-3 h-3" />
                   </button>
                 </div>
               </div>
@@ -195,10 +187,10 @@ export function LayerTree({ className = "", isVisible = true, onToggleVisibility
                         <span className="flex-1">{childLayer}</span>
                         <div className="flex gap-1">
                           <button className="p-1 hover:bg-gray-600 rounded">
-                            <Eye size={12} />
+                            <MaterialIcon name="visibility" className="w-3 h-3" />
                           </button>
                           <button className="p-1 hover:bg-gray-600 rounded">
-                            <Settings size={12} />
+                            <MaterialIcon name="settings" className="w-3 h-3" />
                           </button>
                         </div>
                       </div>
@@ -220,7 +212,11 @@ export function LayerTree({ className = "", isVisible = true, onToggleVisibility
                 onClick={() => toggleLayer(section)}
                 className="flex items-center gap-2 w-full py-1 px-2 hover:bg-gray-700 rounded text-sm"
               >
-                {expandedLayers[section] ? <ChevronDown size={12} /> : <ChevronRight size={12} />}
+                {expandedLayers[section] ? (
+                  <MaterialIcon name="expand_more" className="w-3 h-3" />
+                ) : (
+                  <MaterialIcon name="chevron_right" className="w-3 h-3" />
+                )}
                 <span>{section}</span>
               </button>
               {section === "Usługi" && expandedLayers["Usługi"] && (
@@ -253,14 +249,18 @@ export function LayerTree({ className = "", isVisible = true, onToggleVisibility
           className="w-8 h-8 bg-gray-800 text-white rounded shadow-lg hover:bg-gray-700 flex items-center justify-center"
           title={isVisible ? "Ukryj drzewo warstw" : "Pokaż drzewo warstw"}
         >
-          {isVisible ? <ChevronLeft size={16} /> : <ChevronRight size={16} />}
+          {isVisible ? (
+            <MaterialIcon name="chevron_left" className="w-4 h-4" />
+          ) : (
+            <MaterialIcon name="chevron_right" className="w-4 h-4" />
+          )}
         </button>
         <button
           className="w-8 h-8 bg-gray-800 text-white rounded shadow-lg hover:bg-gray-700 flex items-center justify-center opacity-50 cursor-not-allowed"
           title="Tryb pływający (niedostępny)"
           disabled
         >
-          <ExternalLink size={16} />
+          <MaterialIcon name="open_in_new" className="w-4 h-4" />
         </button>
       </div>
     </div>

@@ -5,7 +5,7 @@ import { Button } from "../../ui/button"
 import { Label } from "../../ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../ui/select"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../ui/card"
-import { Search } from "lucide-react"
+import { MaterialIcon } from "../../ui/material-icon"
 
 interface SzczegoloweTabProps {
   onSearch: (type: string, data: any) => void
@@ -37,7 +37,7 @@ export function SzczegoloweTab({ onSearch, onShowInTable }: SzczegoloweTabProps)
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <Search className="h-5 w-5" />
+          <MaterialIcon name="search" size={20} />
           Wyszukiwanie szczegółowe
         </CardTitle>
         <CardDescription>

@@ -9,7 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
-import { MapPin, Info, FileText } from "lucide-react"
+import { MaterialIcon } from "@/components/ui/material-icon"
 
 interface IdentyfikacjaObiektuModalProps {
   isOpen: boolean
@@ -50,19 +50,19 @@ export function IdentyfikacjaObiektuModal({ isOpen, onClose }: IdentyfikacjaObie
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <MapPin className="h-5 w-5" />
+                  <MaterialIcon name="location_on" className="h-5 w-5" />
                   Identyfikacja przez kliknięcie
                 </CardTitle>
                 <CardDescription>Kliknij na obiekt na mapie, aby uzyskać informacje</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="text-center py-8">
-                  <MapPin className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
+                  <MaterialIcon name="location_on" className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
                   <p className="text-muted-foreground mb-4">
                     Kliknij na dowolny obiekt na mapie, aby wyświetlić jego informacje
                   </p>
                   <Button onClick={handleMapClick} variant="outline">
-                    <MapPin className="h-4 w-4 mr-2" />
+                    <MaterialIcon name="location_on" className="h-4 w-4 mr-2" />
                     Symuluj kliknięcie na mapie
                   </Button>
                 </div>
@@ -75,7 +75,7 @@ export function IdentyfikacjaObiektuModal({ isOpen, onClose }: IdentyfikacjaObie
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
-                    <Info className="h-5 w-5" />
+                    <MaterialIcon name="info" className="h-5 w-5" />
                     Informacje o obiekcie
                   </CardTitle>
                 </CardHeader>
@@ -137,11 +137,11 @@ export function IdentyfikacjaObiektuModal({ isOpen, onClose }: IdentyfikacjaObie
 
                   <div className="flex gap-2">
                     <Button variant="outline" size="sm">
-                      <FileText className="h-4 w-4 mr-2" />
+                      <MaterialIcon name="description" className="h-4 w-4 mr-2" />
                       Eksportuj
                     </Button>
                     <Button variant="outline" size="sm">
-                      <MapPin className="h-4 w-4 mr-2" />
+                      <MaterialIcon name="location_on" className="h-4 w-4 mr-2" />
                       Pokaż na mapie
                     </Button>
                   </div>
@@ -150,7 +150,7 @@ export function IdentyfikacjaObiektuModal({ isOpen, onClose }: IdentyfikacjaObie
             ) : (
               <Card>
                 <CardContent className="text-center py-8">
-                  <Info className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
+                  <MaterialIcon name="info" className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
                   <p className="text-muted-foreground">
                     Brak wyników. Kliknij na obiekt na mapie, aby wyświetlić informacje.
                   </p>

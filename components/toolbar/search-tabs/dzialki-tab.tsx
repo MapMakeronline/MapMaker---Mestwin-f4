@@ -5,7 +5,7 @@ import { Button } from "../../ui/button"
 import { Label } from "../../ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../ui/select"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../ui/card"
-import { Database } from "lucide-react"
+import { MaterialIcon } from "../../ui/material-icon"
 
 interface DzialkiTabProps {
   onSearch: (type: string, data: any) => void
@@ -24,7 +24,7 @@ export function DzialkiTab({ onSearch, onZoom }: DzialkiTabProps) {
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <Database className="h-5 w-5" />
+          <MaterialIcon name="database" size={20} />
           Wyszukiwanie działek
         </CardTitle>
         <CardDescription>Wybierz obręb i numer działki</CardDescription>

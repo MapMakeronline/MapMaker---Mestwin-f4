@@ -5,7 +5,7 @@ import { Button } from "../../ui/button"
 import { Label } from "../../ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../ui/select"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../ui/card"
-import { Globe, Search } from "lucide-react"
+import { MaterialIcon } from "../../ui/material-icon"
 
 interface WyszukiwanieGlobalneTabProps {
   onSearch: (type: string, data: any) => void
@@ -27,7 +27,7 @@ export function WyszukiwanieGlobalneTab({ onSearch, onZoom }: WyszukiwanieGlobal
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <Globe className="h-5 w-5" />
+          <MaterialIcon name="public" size={20} />
           Wyszukiwanie globalne
         </CardTitle>
         <CardDescription>Przeszukaj wszystkie warstwy w projekcie</CardDescription>
@@ -50,7 +50,7 @@ export function WyszukiwanieGlobalneTab({ onSearch, onZoom }: WyszukiwanieGlobal
 
         <div className="flex gap-2">
           <Button onClick={handleSearch} className="bg-orange-600 hover:bg-orange-700">
-            <Search className="h-4 w-4 mr-2" />
+            <MaterialIcon name="search" size={16} className="mr-2" />
             Szukaj
           </Button>
           <Button onClick={handleZoom} variant="outline">

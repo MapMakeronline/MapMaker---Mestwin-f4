@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { MapPin } from "lucide-react"
+import { MaterialIcon } from "@/components/ui/material-icon"
 
 import { DzialkiTab } from "../search-tabs/dzialki-tab"
 import { SzczegoloweTab } from "../search-tabs/szczegolowe-tab"
@@ -91,7 +91,7 @@ export function WyszukiwanieModal({ isOpen, onClose }: WyszukiwanieModalProps) {
                   <div className="flex items-center justify-between">
                     <Badge variant="secondary">{result.warstwa}</Badge>
                     <Button size="sm" variant="outline" onClick={() => handleZoom(result)}>
-                      <MapPin className="h-4 w-4 mr-2" />
+                      <MaterialIcon name="location_on" className="h-4 w-4 mr-2" />
                       Przybliż
                     </Button>
                   </div>
