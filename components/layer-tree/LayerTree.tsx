@@ -179,61 +179,107 @@ export default function LayerTree({ data, onToggleVisibility, className, isVisib
         <div className="flex-shrink-0 p-4 border-b border-gray-700">
           <h1 className="text-lg font-semibold mb-3">ogrodzieniecip</h1>
 
-          {/* Toolbar Icons */}
-          <div className="flex items-center gap-1 mb-3">
-            <button className="p-1 hover:bg-gray-700 rounded">
-              <MaterialIcon name="visibility" className="w-4 h-4" />
-            </button>
-            <button className="p-1 hover:bg-gray-700 rounded">
-              <MaterialIcon name="crop_square" className="w-4 h-4" />
-            </button>
-            <button className="p-1 hover:bg-gray-700 rounded">
-              <MaterialIcon name="radio_button_unchecked" className="w-4 h-4" />
-            </button>
-            <button className="p-1 hover:bg-gray-700 rounded">
-              <MaterialIcon name="add" className="w-4 h-4" />
-            </button>
-            <button className="p-1 hover:bg-gray-700 rounded">
-              <MaterialIcon name="remove" className="w-4 h-4" />
-            </button>
-            <button className="p-1 hover:bg-gray-700 rounded">
-              <MaterialIcon name="my_location" className="w-4 h-4" />
-            </button>
-            <button className="p-1 hover:bg-gray-700 rounded">
-              <MaterialIcon name="settings" className="w-4 h-4" />
-            </button>
+          <div className="flex items-center gap-1 mb-3 flex-wrap">
+            <Tooltip title="Widoczność warstw">
+              <IconButton size="small" sx={{ color: "white", p: 0.5 }}>
+                <VisibilityIcon fontSize="small" />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Zaznacz wszystkie">
+              <IconButton size="small" sx={{ color: "white", p: 0.5 }}>
+                <MaterialIcon name="select_all" className="w-4 h-4" />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Odznacz wszystkie">
+              <IconButton size="small" sx={{ color: "white", p: 0.5 }}>
+                <MaterialIcon name="deselect" className="w-4 h-4" />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Dodaj warstwę">
+              <IconButton size="small" sx={{ color: "white", p: 0.5 }}>
+                <MaterialIcon name="add" className="w-4 h-4" />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Usuń warstwę">
+              <IconButton size="small" sx={{ color: "white", p: 0.5 }}>
+                <MaterialIcon name="delete" className="w-4 h-4" />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Przenieś w górę">
+              <IconButton size="small" sx={{ color: "white", p: 0.5 }}>
+                <MaterialIcon name="keyboard_arrow_up" className="w-4 h-4" />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Przenieś w dół">
+              <IconButton size="small" sx={{ color: "white", p: 0.5 }}>
+                <MaterialIcon name="keyboard_arrow_down" className="w-4 h-4" />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Właściwości warstwy">
+              <IconButton size="small" sx={{ color: "white", p: 0.5 }}>
+                <MaterialIcon name="settings" className="w-4 h-4" />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Edytuj warstwę">
+              <IconButton size="small" sx={{ color: "white", p: 0.5 }}>
+                <MaterialIcon name="edit" className="w-4 h-4" />
+              </IconButton>
+            </Tooltip>
           </div>
 
-          {/* Search Bar */}
-          <TextField
-            placeholder="Znajdź warstwę lub grupę"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            size="small"
-            fullWidth
-            sx={{
-              "& .MuiOutlinedInput-root": {
-                backgroundColor: "rgba(55, 65, 81, 1)",
-                color: "white",
-                "& fieldset": {
-                  borderColor: "rgba(75, 85, 99, 1)",
+          <div className="relative">
+            <TextField
+              placeholder="Znajdź warstwę lub grupę"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              size="small"
+              fullWidth
+              InputProps={{
+                endAdornment: (
+                  <div className="flex items-center gap-1">
+                    <Tooltip title="Wyczyść wyszukiwanie">
+                      <IconButton
+                        size="small"
+                        onClick={() => setSearchQuery("")}
+                        sx={{ color: "rgba(156, 163, 175, 1)", p: 0.5 }}
+                      >
+                        <MaterialIcon name="clear" className="w-4 h-4" />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Opcje filtrowania">
+                      <IconButton size="small" sx={{ color: "rgba(156, 163, 175, 1)", p: 0.5 }}>
+                        <MaterialIcon name="filter_list" className="w-4 h-4" />
+                      </IconButton>
+                    </Tooltip>
+                  </div>
+                ),
+              }}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  backgroundColor: "rgba(55, 65, 81, 1)",
+                  color: "white",
+                  borderRadius: "6px",
+                  "& fieldset": {
+                    borderColor: "rgba(75, 85, 99, 1)",
+                  },
+                  "&:hover fieldset": {
+                    borderColor: "rgba(107, 114, 128, 1)",
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: "rgba(59, 130, 246, 1)",
+                  },
                 },
-                "&:hover fieldset": {
-                  borderColor: "rgba(107, 114, 128, 1)",
+                "& .MuiOutlinedInput-input": {
+                  color: "white",
+                  fontSize: "0.875rem",
+                  "&::placeholder": {
+                    color: "rgba(156, 163, 175, 1)",
+                    opacity: 1,
+                  },
                 },
-                "&.Mui-focused fieldset": {
-                  borderColor: "rgba(147, 197, 253, 1)",
-                },
-              },
-              "& .MuiOutlinedInput-input": {
-                color: "white",
-                "&::placeholder": {
-                  color: "rgba(156, 163, 175, 1)",
-                  opacity: 1,
-                },
-              },
-            }}
-          />
+              }}
+            />
+          </div>
         </div>
 
         {/* Layers Section - Scrollable middle section with custom tree */}
