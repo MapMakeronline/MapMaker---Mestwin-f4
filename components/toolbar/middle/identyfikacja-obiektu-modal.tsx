@@ -1,23 +1,55 @@
 "use client"
 
+import type React from "react"
+
 import { useState } from "react"
 import { Modal } from "@/components/ui/modal"
-import { Button } from "@/components/ui/button"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Separator } from "@/components/ui/separator"
-import { MaterialIcon } from "@/components/ui/material-icon"
+import {
+  Button,
+  TextField,
+  Typography,
+  Tabs,
+  Tab,
+  Box,
+  Card,
+  CardContent,
+  Chip,
+  Divider,
+  useTheme,
+} from "@mui/material"
+import { LocationOn, Info, Description } from "@mui/icons-material"
 
 interface IdentyfikacjaObiektuModalProps {
   isOpen: boolean
   onClose: () => void
 }
 
+interface TabPanelProps {
+  children?: React.ReactNode
+  index: number
+  value: number
+}
+
+function TabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+    </div>
+  )
+}
+
 export function IdentyfikacjaObiektuModal({ isOpen, onClose }: IdentyfikacjaObiektuModalProps) {
   const [objectInfo, setObjectInfo] = useState<any>(null)
+  const [tabValue, setTabValue] = useState(0)
+  const theme = useTheme()
 
   const mockObjectData = {
     warstwa: "XXXIX_338_2005 - przeznaczenie terenu",
@@ -33,133 +65,173 @@ export function IdentyfikacjaObiektuModal({ isOpen, onClose }: IdentyfikacjaObie
   }
 
   const handleMapClick = () => {
-    // Mock map click functionality
     setObjectInfo(mockObjectData)
+    setTabValue(1) // Switch to results tab
+  }
+
+  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+    setTabValue(newValue)
   }
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Identyfikacja obiektu" size="lg">
-      <div className="max-h-[80vh] overflow-y-auto">
-        <Tabs defaultValue="map" className="w-full">
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="map">Kliknij na mapie</TabsTrigger>
-            <TabsTrigger value="results">Wyniki</TabsTrigger>
-          </TabsList>
+      <Box sx={{ width: "100%", maxHeight: "80vh", overflow: "auto" }}>
+        <Tabs
+          value={tabValue}
+          onChange={handleTabChange}
+          aria-label="identification tabs"
+          sx={{ borderBottom: 1, borderColor: "divider" }}
+        >
+          <Tab label="Kliknij na mapie" />
+          <Tab label="Wyniki" />
+        </Tabs>
 
-          <TabsContent value="map" className="space-y-4">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <MaterialIcon name="location_on" className="h-5 w-5" />
-                  Identyfikacja przez kliknięcie
-                </CardTitle>
-                <CardDescription>Kliknij na obiekt na mapie, aby uzyskać informacje</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="text-center py-8">
-                  <MaterialIcon name="location_on" className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
-                  <p className="text-muted-foreground mb-4">
-                    Kliknij na dowolny obiekt na mapie, aby wyświetlić jego informacje
-                  </p>
-                  <Button onClick={handleMapClick} variant="outline">
-                    <MaterialIcon name="location_on" className="h-4 w-4 mr-2" />
-                    Symuluj kliknięcie na mapie
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
+        <TabPanel value={tabValue} index={0}>
+          <Card sx={{ backgroundColor: theme.palette.background.paper }}>
+            <CardContent>
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1 }}>
+                <LocationOn />
+                <Typography variant="h6">Identyfikacja przez kliknięcie</Typography>
+              </Box>
+              <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+                Kliknij na obiekt na mapie, aby uzyskać informacje
+              </Typography>
 
-          <TabsContent value="results" className="space-y-4">
-            {objectInfo ? (
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <MaterialIcon name="info" className="h-5 w-5" />
-                    Informacje o obiekcie
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid grid-cols-1 gap-4">
-                    <div className="space-y-2">
-                      <Label className="text-sm font-medium">Warstwa:</Label>
-                      <Badge variant="secondary">{objectInfo.warstwa}</Badge>
-                    </div>
+              <Box sx={{ textAlign: "center", py: 4 }}>
+                <LocationOn sx={{ fontSize: 48, color: "text.secondary", mb: 2 }} />
+                <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
+                  Kliknij na dowolny obiekt na mapie, aby wyświetlić jego informacje
+                </Typography>
+                <Button onClick={handleMapClick} variant="outlined" startIcon={<LocationOn />}>
+                  Symuluj kliknięcie na mapie
+                </Button>
+              </Box>
+            </CardContent>
+          </Card>
+        </TabPanel>
 
-                    <Separator />
+        <TabPanel value={tabValue} index={1}>
+          {objectInfo ? (
+            <Card sx={{ backgroundColor: theme.palette.background.paper }}>
+              <CardContent>
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 3 }}>
+                  <Info />
+                  <Typography variant="h6">Informacje o obiekcie</Typography>
+                </Box>
 
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <Label className="text-sm font-medium">OGC FID:</Label>
-                        <p className="text-sm">{objectInfo.ogc_fid}</p>
-                      </div>
-                      <div className="space-y-2">
-                        <Label className="text-sm font-medium">F_nasza:</Label>
-                        <p className="text-sm">{objectInfo.f_nasza}</p>
-                      </div>
-                    </div>
+                <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                  <Box>
+                    <Typography variant="subtitle2" color="text.secondary">
+                      Warstwa:
+                    </Typography>
+                    <Chip label={objectInfo.warstwa} variant="outlined" sx={{ mt: 0.5 }} />
+                  </Box>
 
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <Label className="text-sm font-medium">F_mpzp:</Label>
-                        <p className="text-sm">{objectInfo.f_mpzp}</p>
-                      </div>
-                      <div className="space-y-2">
-                        <Label className="text-sm font-medium">Opis:</Label>
-                        <p className="text-sm">{objectInfo.opis}</p>
-                      </div>
-                    </div>
+                  <Divider />
 
-                    <Separator />
+                  <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 2 }}>
+                    <Box>
+                      <Typography variant="subtitle2" color="text.secondary">
+                        OGC FID:
+                      </Typography>
+                      <Typography variant="body2">{objectInfo.ogc_fid}</Typography>
+                    </Box>
+                    <Box>
+                      <Typography variant="subtitle2" color="text.secondary">
+                        F_nasza:
+                      </Typography>
+                      <Typography variant="body2">{objectInfo.f_nasza}</Typography>
+                    </Box>
+                  </Box>
 
-                    <div className="space-y-2">
-                      <Label className="text-sm font-medium">Ścieżka:</Label>
-                      <p className="text-sm text-muted-foreground">{objectInfo.sciezka}</p>
-                    </div>
+                  <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 2 }}>
+                    <Box>
+                      <Typography variant="subtitle2" color="text.secondary">
+                        F_mpzp:
+                      </Typography>
+                      <Typography variant="body2">{objectInfo.f_mpzp}</Typography>
+                    </Box>
+                    <Box>
+                      <Typography variant="subtitle2" color="text.secondary">
+                        Opis:
+                      </Typography>
+                      <Typography variant="body2">{objectInfo.opis}</Typography>
+                    </Box>
+                  </Box>
 
-                    <div className="space-y-2">
-                      <Label className="text-sm font-medium">Nr uchwały:</Label>
-                      <p className="text-sm">{objectInfo.nr_uchwala}</p>
-                    </div>
+                  <Divider />
 
-                    <div className="space-y-2">
-                      <Label className="text-sm font-medium">Nazwa MPZP:</Label>
-                      <Textarea value={objectInfo.nazwa_mpzp} readOnly className="min-h-[60px] resize-none" />
-                    </div>
+                  <Box>
+                    <Typography variant="subtitle2" color="text.secondary">
+                      Ścieżka:
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {objectInfo.sciezka}
+                    </Typography>
+                  </Box>
 
-                    <div className="space-y-2">
-                      <Label className="text-sm font-medium">Treść uchwały:</Label>
-                      <Textarea value={objectInfo.n_uchwala} readOnly className="min-h-[80px] resize-none" />
-                    </div>
-                  </div>
+                  <Box>
+                    <Typography variant="subtitle2" color="text.secondary">
+                      Nr uchwały:
+                    </Typography>
+                    <Typography variant="body2">{objectInfo.nr_uchwala}</Typography>
+                  </Box>
 
-                  <Separator />
+                  <Box>
+                    <Typography variant="subtitle2" color="text.secondary">
+                      Nazwa MPZP:
+                    </Typography>
+                    <TextField
+                      value={objectInfo.nazwa_mpzp}
+                      multiline
+                      rows={2}
+                      fullWidth
+                      InputProps={{ readOnly: true }}
+                      variant="outlined"
+                      sx={{ mt: 0.5 }}
+                    />
+                  </Box>
 
-                  <div className="flex gap-2">
-                    <Button variant="outline" size="sm">
-                      <MaterialIcon name="description" className="h-4 w-4 mr-2" />
+                  <Box>
+                    <Typography variant="subtitle2" color="text.secondary">
+                      Treść uchwały:
+                    </Typography>
+                    <TextField
+                      value={objectInfo.n_uchwala}
+                      multiline
+                      rows={3}
+                      fullWidth
+                      InputProps={{ readOnly: true }}
+                      variant="outlined"
+                      sx={{ mt: 0.5 }}
+                    />
+                  </Box>
+
+                  <Divider />
+
+                  <Box sx={{ display: "flex", gap: 1 }}>
+                    <Button variant="outlined" size="small" startIcon={<Description />}>
                       Eksportuj
                     </Button>
-                    <Button variant="outline" size="sm">
-                      <MaterialIcon name="location_on" className="h-4 w-4 mr-2" />
+                    <Button variant="outlined" size="small" startIcon={<LocationOn />}>
                       Pokaż na mapie
                     </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ) : (
-              <Card>
-                <CardContent className="text-center py-8">
-                  <MaterialIcon name="info" className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
-                  <p className="text-muted-foreground">
-                    Brak wyników. Kliknij na obiekt na mapie, aby wyświetlić informacje.
-                  </p>
-                </CardContent>
-              </Card>
-            )}
-          </TabsContent>
-        </Tabs>
-      </div>
+                  </Box>
+                </Box>
+              </CardContent>
+            </Card>
+          ) : (
+            <Card sx={{ backgroundColor: theme.palette.background.paper }}>
+              <CardContent sx={{ textAlign: "center", py: 4 }}>
+                <Info sx={{ fontSize: 48, color: "text.secondary", mb: 2 }} />
+                <Typography variant="body1" color="text.secondary">
+                  Brak wyników. Kliknij na obiekt na mapie, aby wyświetlić informacje.
+                </Typography>
+              </CardContent>
+            </Card>
+          )}
+        </TabPanel>
+      </Box>
     </Modal>
   )
 }

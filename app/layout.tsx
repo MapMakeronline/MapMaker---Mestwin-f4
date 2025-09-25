@@ -2,6 +2,9 @@ import type { Metadata } from "next"
 import type React from "react"
 import { Inter, Roboto_Mono } from "next/font/google"
 import "./globals.css"
+import { ThemeProvider } from "@mui/material/styles"
+import { CssBaseline } from "@mui/material"
+import { theme } from "../lib/theme"
 
 const inter = Inter({
   variable: "--font-inter",
@@ -32,7 +35,12 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
         />
       </head>
-      <body>{children}</body>
+      <body>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   )
 }

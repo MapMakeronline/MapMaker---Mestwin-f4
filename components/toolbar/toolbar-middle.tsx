@@ -7,6 +7,7 @@ interface ToolbarMiddleProps {
   onWypisWyrysClick?: () => void
   onIdentyfikacjaObiektuClick?: () => void
   onWyszukiwanieClick?: () => void
+  onNarzedziaRysowaniaClick?: () => void
 }
 
 export function ToolbarMiddle({
@@ -14,6 +15,7 @@ export function ToolbarMiddle({
   onWypisWyrysClick,
   onIdentyfikacjaObiektuClick,
   onWyszukiwanieClick,
+  onNarzedziaRysowaniaClick,
 }: ToolbarMiddleProps) {
   return (
     <div className={`flex-1 flex flex-col items-center gap-2 overflow-y-auto px-2 py-2 ${className}`}>
@@ -39,6 +41,14 @@ export function ToolbarMiddle({
         title="Wyszukiwanie"
       >
         <MaterialIcon name="search" size={24} />
+      </button>
+
+      <button
+        className="p-3 hover:bg-secondary/80 rounded text-muted-foreground hover:text-foreground transition-colors"
+        onClick={onNarzedziaRysowaniaClick}
+        title="Narzędzia rysowania"
+      >
+        <MaterialIcon name="draw" size={24} />
       </button>
     </div>
   )

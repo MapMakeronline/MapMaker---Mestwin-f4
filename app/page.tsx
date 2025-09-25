@@ -8,6 +8,7 @@ import { SettingsModal } from "@/components/toolbar/footer/settings-modal"
 import { WypisWyrysModal } from "@/components/toolbar/middle/wypis-wyrys-modal"
 import { IdentyfikacjaObiektuModal } from "@/components/toolbar/middle/identyfikacja-obiektu-modal"
 import { WyszukiwanieModal } from "@/components/toolbar/middle/wyszukiwanie-modal"
+import { NarzedziaRysowaniaModal } from "@/components/toolbar/middle/narzedzia-rysowania-modal"
 import { KontaktModal } from "@/components/toolbar/footer/kontakt-modal"
 import { SkrotyKlawiszoweModal } from "@/components/toolbar/footer/skroty-klawiszowe-modal"
 
@@ -17,6 +18,7 @@ export default function GISApp() {
   const [isWypisWyrysOpen, setIsWypisWyrysOpen] = useState(false)
   const [isIdentyfikacjaObiektuOpen, setIsIdentyfikacjaObiektuOpen] = useState(false)
   const [isWyszukiwanieOpen, setIsWyszukiwanieOpen] = useState(false)
+  const [isNarzedziaRysowaniaOpen, setIsNarzedziaRysowaniaOpen] = useState(false)
   const [isKontaktOpen, setIsKontaktOpen] = useState(false)
   const [isSkrotyKlawiszoweOpen, setIsSkrotyKlawiszoweOpen] = useState(false)
 
@@ -34,6 +36,7 @@ export default function GISApp() {
         onWypisWyrysClick={() => setIsWypisWyrysOpen(true)}
         onIdentyfikacjaObiektuClick={() => setIsIdentyfikacjaObiektuOpen(true)}
         onWyszukiwanieClick={() => setIsWyszukiwanieOpen(true)}
+        onNarzedziaRysowaniaClick={() => setIsNarzedziaRysowaniaOpen(true)}
         onKontaktClick={() => setIsKontaktOpen(true)}
         onSkrotyKlawiszoweClick={() => setIsSkrotyKlawiszoweOpen(true)}
       />
@@ -52,6 +55,8 @@ export default function GISApp() {
 
       {/* Search Modal */}
       <WyszukiwanieModal isOpen={isWyszukiwanieOpen} onClose={() => setIsWyszukiwanieOpen(false)} />
+
+      <NarzedziaRysowaniaModal isOpen={isNarzedziaRysowaniaOpen} onClose={() => setIsNarzedziaRysowaniaOpen(false)} />
 
       {/* Contact Modal */}
       <KontaktModal isOpen={isKontaktOpen} onClose={() => setIsKontaktOpen(false)} />

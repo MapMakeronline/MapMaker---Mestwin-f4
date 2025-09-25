@@ -2,10 +2,23 @@
 
 import { useState } from "react"
 import { Modal } from "@/components/ui/modal"
-import { Button } from "@/components/ui/button"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Checkbox } from "@/components/ui/checkbox"
-import { MaterialIcon } from "@/components/ui/material-icon"
+import {
+  Button,
+  Typography,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Checkbox,
+  FormControlLabel,
+  Box,
+  IconButton,
+  useTheme,
+} from "@mui/material"
+import { Close, ChevronLeft, ChevronRight } from "@mui/icons-material"
 
 interface Dzialka {
   key: string
@@ -29,6 +42,7 @@ export function WypisWyrysModal({ isOpen, onClose }: WypisWyrysModalProps) {
   const [currentStep, setCurrentStep] = useState(1)
   const [selectedDzialka, setSelectedDzialka] = useState<Dzialka | null>(null)
   const [selectedPrzeznaczenia, setSelectedPrzeznaczenia] = useState<string[]>(["xxxix"])
+  const theme = useTheme()
 
   const przeznaczenia: Przeznaczenie[] = [
     {
@@ -86,152 +100,168 @@ export function WypisWyrysModal({ isOpen, onClose }: WypisWyrysModalProps) {
   }
 
   const renderPrzeznaczenie = (przeznaczenie: Przeznaczenie, level = 0) => (
-    <div key={przeznaczenie.id} style={{ marginLeft: level * 24 }} className="py-1">
-      <div className="flex items-center space-x-2">
-        <Checkbox
-          id={przeznaczenie.id}
-          checked={selectedPrzeznaczenia.includes(przeznaczenie.id)}
-          onCheckedChange={() => handlePrzeznaczeniaToggle(przeznaczenie.id)}
-        />
-        <label htmlFor={przeznaczenie.id} className="text-sm cursor-pointer">
-          {przeznaczenie.nazwa} {przeznaczenie.procent > 0 && `(${przeznaczenie.procent}%)`}
-        </label>
-      </div>
+    <Box key={przeznaczenie.id} sx={{ ml: level * 3, py: 0.5 }}>
+      <FormControlLabel
+        control={
+          <Checkbox
+            checked={selectedPrzeznaczenia.includes(przeznaczenie.id)}
+            onChange={() => handlePrzeznaczeniaToggle(przeznaczenie.id)}
+            size="small"
+          />
+        }
+        label={
+          <Typography variant="body2">
+            {przeznaczenie.nazwa} {przeznaczenie.procent > 0 && `(${przeznaczenie.procent}%)`}
+          </Typography>
+        }
+      />
       {przeznaczenie.children?.map((child) => renderPrzeznaczenie(child, level + 1))}
-    </div>
+    </Box>
   )
 
   const renderStep1 = () => (
-    <div className="space-y-4">
-      <p className="text-sm text-muted-foreground">Wskaż działkę na mapie, a następnie wybierz jedną z listy:</p>
-      <div className="border rounded-md">
-        <Table>
-          <TableHeader>
+    <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+      <Typography variant="body2" color="text.secondary">
+        Wskaż działkę na mapie, a następnie wybierz jedną z listy:
+      </Typography>
+      <TableContainer component={Paper} sx={{ backgroundColor: theme.palette.background.paper }}>
+        <Table size="small">
+          <TableHead>
             <TableRow>
-              <TableHead>Obręb działki</TableHead>
-              <TableHead>Numer działki</TableHead>
+              <TableCell>Obręb działki</TableCell>
+              <TableCell>Numer działki</TableCell>
             </TableRow>
-          </TableHeader>
+          </TableHead>
           <TableBody>
             {selectedDzialka ? (
               <TableRow>
                 <TableCell>{selectedDzialka.obreb}</TableCell>
                 <TableCell>
-                  <div className="flex items-center justify-between">
-                    <span>{selectedDzialka.numer}</span>
-                    <Button variant="ghost" size="sm" onClick={handleRemoveDzialka} className="h-6 w-6 p-0">
-                      <MaterialIcon name="close" size={16} />
-                    </Button>
-                  </div>
+                  <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <Typography>{selectedDzialka.numer}</Typography>
+                    <IconButton size="small" onClick={handleRemoveDzialka}>
+                      <Close fontSize="small" />
+                    </IconButton>
+                  </Box>
                 </TableCell>
               </TableRow>
             ) : (
               <TableRow>
-                <TableCell colSpan={2} className="text-center text-muted-foreground py-8">
-                  Brak wybranych działek
+                <TableCell colSpan={2} align="center" sx={{ py: 4 }}>
+                  <Typography color="text.secondary">Brak wybranych działek</Typography>
                 </TableCell>
               </TableRow>
             )}
           </TableBody>
         </Table>
-      </div>
+      </TableContainer>
       {!selectedDzialka && (
-        <Button onClick={handleSelectDzialka} className="w-full">
+        <Button onClick={handleSelectDzialka} variant="contained" fullWidth>
           Symuluj wybór działki z mapy
         </Button>
       )}
-    </div>
+    </Box>
   )
 
   const renderStep2 = () => (
-    <div className="space-y-4">
-      <p className="text-sm text-muted-foreground">Wskaż działkę na mapie, a następnie wybierz jedną z listy:</p>
-      <div className="border rounded-md">
-        <Table>
-          <TableHeader>
+    <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+      <Typography variant="body2" color="text.secondary">
+        Wskaż działkę na mapie, a następnie wybierz jedną z listy:
+      </Typography>
+      <TableContainer component={Paper} sx={{ backgroundColor: theme.palette.background.paper }}>
+        <Table size="small">
+          <TableHead>
             <TableRow>
-              <TableHead>Obręb działki</TableHead>
-              <TableHead>Numer działki</TableHead>
+              <TableCell>Obręb działki</TableCell>
+              <TableCell>Numer działki</TableCell>
             </TableRow>
-          </TableHeader>
+          </TableHead>
           <TableBody>
             {selectedDzialka && (
               <TableRow>
                 <TableCell>{selectedDzialka.obreb}</TableCell>
                 <TableCell>
-                  <div className="flex items-center justify-between">
-                    <span>{selectedDzialka.numer}</span>
-                    <Button variant="ghost" size="sm" onClick={handleRemoveDzialka} className="h-6 w-6 p-0">
-                      <MaterialIcon name="close" size={16} />
-                    </Button>
-                  </div>
+                  <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <Typography>{selectedDzialka.numer}</Typography>
+                    <IconButton size="small" onClick={handleRemoveDzialka}>
+                      <Close fontSize="small" />
+                    </IconButton>
+                  </Box>
                 </TableCell>
               </TableRow>
             )}
           </TableBody>
         </Table>
-      </div>
-    </div>
+      </TableContainer>
+    </Box>
   )
 
   const renderStep3 = () => (
-    <div className="space-y-4">
-      <p className="text-sm text-muted-foreground">
+    <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+      <Typography variant="body2" color="text.secondary">
         Wybierz z listy dostępnych przeznaczeń te, na podstawie których ma zostać wygenerowany wypis
-      </p>
+      </Typography>
 
-      <div className="flex items-center justify-center space-x-4 py-4">
-        <Button variant="ghost" size="sm" disabled>
-          <MaterialIcon name="chevron_left" size={16} />
-        </Button>
-        <div className="text-center">
-          <div className="underline text-sm">Numer działki: {selectedDzialka?.numer}</div>
-          <div className="text-sm text-muted-foreground">Obręb działki: {selectedDzialka?.obreb}</div>
-        </div>
-        <Button variant="ghost" size="sm" disabled>
-          <MaterialIcon name="chevron_right" size={16} />
-        </Button>
-      </div>
+      <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 2, py: 2 }}>
+        <IconButton disabled>
+          <ChevronLeft />
+        </IconButton>
+        <Box sx={{ textAlign: "center" }}>
+          <Typography variant="body2" sx={{ textDecoration: "underline" }}>
+            Numer działki: {selectedDzialka?.numer}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Obręb działki: {selectedDzialka?.obreb}
+          </Typography>
+        </Box>
+        <IconButton disabled>
+          <ChevronRight />
+        </IconButton>
+      </Box>
 
-      <div className="border rounded-md bg-muted/50 p-4 max-h-64 overflow-y-auto">
+      <Paper sx={{ p: 2, maxHeight: 256, overflow: "auto", backgroundColor: theme.palette.background.paper }}>
         {przeznaczenia.map((przeznaczenie) => renderPrzeznaczenie(przeznaczenie))}
-      </div>
-    </div>
+      </Paper>
+    </Box>
   )
 
   const footerContent = (
-    <div className="flex items-center justify-between">
-      <Button variant="outline" onClick={handleBack} disabled={currentStep === 1}>
+    <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      <Button variant="outlined" onClick={handleBack} disabled={currentStep === 1}>
         {currentStep === 1 ? "Powrót" : "Wstecz"}
       </Button>
 
-      <div className="flex items-center space-x-2">
+      <Box sx={{ display: "flex", gap: 1 }}>
         {currentStep <= 2 && (
-          <Button variant="outline" disabled={!selectedDzialka}>
+          <Button variant="outlined" disabled={!selectedDzialka}>
             Wyrys
           </Button>
         )}
 
         {currentStep < 3 ? (
-          <Button onClick={handleNext} disabled={!selectedDzialka}>
+          <Button onClick={handleNext} disabled={!selectedDzialka} variant="contained">
             Dalej
           </Button>
         ) : (
-          <Button onClick={() => alert("Generowanie wypisu...")} disabled={selectedPrzeznaczenia.length === 0}>
+          <Button
+            onClick={() => alert("Generowanie wypisu...")}
+            disabled={selectedPrzeznaczenia.length === 0}
+            variant="contained"
+          >
             Generuj
           </Button>
         )}
-      </div>
-    </div>
+      </Box>
+    </Box>
   )
 
   return (
     <Modal title="Wypis i wyrys" isOpen={isOpen} onClose={handleClose} footer={footerContent} size="md">
-      <div className="py-2">
+      <Box sx={{ py: 1 }}>
         {currentStep === 1 && renderStep1()}
         {currentStep === 2 && renderStep2()}
         {currentStep === 3 && renderStep3()}
-      </div>
+      </Box>
     </Modal>
   )
 }

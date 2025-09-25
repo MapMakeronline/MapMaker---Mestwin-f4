@@ -1,12 +1,11 @@
 "use client"
 
+import type React from "react"
+
 import { useState } from "react"
 import { Modal } from "@/components/ui/modal"
-import { Button } from "@/components/ui/button"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { MaterialIcon } from "@/components/ui/material-icon"
+import { Tabs, Tab, Box, Card, CardContent, CardHeader, Typography, Chip, Button, useTheme } from "@mui/material"
+import { LocationOn } from "@mui/icons-material"
 
 import { DzialkiTab } from "../search-tabs/dzialki-tab"
 import { SzczegoloweTab } from "../search-tabs/szczegolowe-tab"
@@ -18,8 +17,32 @@ interface WyszukiwanieModalProps {
   onClose: () => void
 }
 
+interface TabPanelProps {
+  children?: React.ReactNode
+  index: number
+  value: number
+}
+
+function TabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`search-tabpanel-${index}`}
+      aria-labelledby={`search-tab-${index}`}
+      {...other}
+    >
+      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+    </div>
+  )
+}
+
 export function WyszukiwanieModal({ isOpen, onClose }: WyszukiwanieModalProps) {
   const [searchResults, setSearchResults] = useState<any[]>([])
+  const [tabValue, setTabValue] = useState(0)
+  const theme = useTheme()
 
   // Mock search results
   const mockResults = [
@@ -52,59 +75,84 @@ export function WyszukiwanieModal({ isOpen, onClose }: WyszukiwanieModalProps) {
     console.log("Pokaż w tabeli atrybutów:", data)
   }
 
+  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+    setTabValue(newValue)
+  }
+
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Wyszukiwanie" size="xl">
-      <div className="max-h-[80vh] overflow-y-auto">
-        <Tabs defaultValue="dzialki" className="w-full">
-          <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="dzialki">Działki</TabsTrigger>
-            <TabsTrigger value="szczegolowe">Szczegółowe</TabsTrigger>
-            <TabsTrigger value="slowa">Słowa kluczowe</TabsTrigger>
-            <TabsTrigger value="globalne">Wyszukiwanie globalne</TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="dzialki" className="space-y-4">
-            <DzialkiTab onSearch={handleSearch} onZoom={handleZoom} />
-          </TabsContent>
-
-          <TabsContent value="szczegolowe" className="space-y-4">
-            <SzczegoloweTab onSearch={handleSearch} onShowInTable={handleShowInTable} />
-          </TabsContent>
-
-          <TabsContent value="slowa" className="space-y-4">
-            <SlowaKluczoweTab onSearch={handleSearch} onZoom={handleZoom} />
-          </TabsContent>
-
-          <TabsContent value="globalne" className="space-y-4">
-            <WyszukiwanieGlobalneTab onSearch={handleSearch} onZoom={handleZoom} />
-          </TabsContent>
+      <Box sx={{ width: "100%", maxHeight: "80vh", overflow: "auto" }}>
+        <Tabs
+          value={tabValue}
+          onChange={handleTabChange}
+          aria-label="search tabs"
+          sx={{ borderBottom: 1, borderColor: "divider" }}
+        >
+          <Tab label="Działki" />
+          <Tab label="Szczegółowe" />
+          <Tab label="Słowa kluczowe" />
+          <Tab label="Wyszukiwanie globalne" />
         </Tabs>
 
+        <TabPanel value={tabValue} index={0}>
+          <DzialkiTab onSearch={handleSearch} onZoom={handleZoom} />
+        </TabPanel>
+
+        <TabPanel value={tabValue} index={1}>
+          <SzczegoloweTab onSearch={handleSearch} onShowInTable={handleShowInTable} />
+        </TabPanel>
+
+        <TabPanel value={tabValue} index={2}>
+          <SlowaKluczoweTab onSearch={handleSearch} onZoom={handleZoom} />
+        </TabPanel>
+
+        <TabPanel value={tabValue} index={3}>
+          <WyszukiwanieGlobalneTab onSearch={handleSearch} onZoom={handleZoom} />
+        </TabPanel>
+
         {searchResults.length > 0 && (
-          <Card className="mt-4">
+          <Card sx={{ mt: 2, backgroundColor: theme.palette.background.paper }}>
             <CardHeader>
-              <CardTitle>Wyniki wyszukiwania</CardTitle>
+              <Typography variant="h6">Wyniki wyszukiwania</Typography>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
               {searchResults.map((result) => (
-                <div key={result.id} className="border rounded-lg p-4 space-y-2">
-                  <div className="flex items-center justify-between">
-                    <Badge variant="secondary">{result.warstwa}</Badge>
-                    <Button size="sm" variant="outline" onClick={() => handleZoom(result)}>
-                      <MaterialIcon name="location_on" className="h-4 w-4 mr-2" />
-                      Przybliż
-                    </Button>
-                  </div>
-                  <h4 className="font-medium">{result.nazwa}</h4>
-                  {result.obreb && <p className="text-sm text-muted-foreground">Obręb: {result.obreb}</p>}
-                  {result.adres && <p className="text-sm text-muted-foreground">Adres: {result.adres}</p>}
-                  <p className="text-sm">{result.opis}</p>
-                </div>
+                <Card key={result.id} variant="outlined" sx={{ backgroundColor: theme.palette.background.default }}>
+                  <CardContent>
+                    <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", mb: 1 }}>
+                      <Chip label={result.warstwa} variant="outlined" size="small" />
+                      <Button
+                        size="small"
+                        variant="outlined"
+                        onClick={() => handleZoom(result)}
+                        startIcon={<LocationOn />}
+                      >
+                        Przybliż
+                      </Button>
+                    </Box>
+                    <Typography variant="subtitle1" sx={{ mb: 1 }}>
+                      {result.nazwa}
+                    </Typography>
+                    {result.obreb && (
+                      <Typography variant="body2" color="text.secondary">
+                        Obręb: {result.obreb}
+                      </Typography>
+                    )}
+                    {result.adres && (
+                      <Typography variant="body2" color="text.secondary">
+                        Adres: {result.adres}
+                      </Typography>
+                    )}
+                    <Typography variant="body2" sx={{ mt: 1 }}>
+                      {result.opis}
+                    </Typography>
+                  </CardContent>
+                </Card>
               ))}
             </CardContent>
           </Card>
         )}
-      </div>
+      </Box>
     </Modal>
   )
 }

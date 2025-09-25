@@ -10,6 +10,7 @@ interface ToolbarProps {
   onWypisWyrysClick?: () => void
   onIdentyfikacjaObiektuClick?: () => void
   onWyszukiwanieClick?: () => void
+  onNarzedziaRysowaniaClick?: () => void
   onKontaktClick?: () => void
   onSkrotyKlawiszoweClick?: () => void
 }
@@ -20,6 +21,7 @@ export function Toolbar({
   onWypisWyrysClick,
   onIdentyfikacjaObiektuClick,
   onWyszukiwanieClick,
+  onNarzedziaRysowaniaClick,
   onKontaktClick,
   onSkrotyKlawiszoweClick,
 }: ToolbarProps) {
@@ -31,6 +33,7 @@ export function Toolbar({
         onWypisWyrysClick={onWypisWyrysClick}
         onIdentyfikacjaObiektuClick={onIdentyfikacjaObiektuClick}
         onWyszukiwanieClick={onWyszukiwanieClick}
+        onNarzedziaRysowaniaClick={onNarzedziaRysowaniaClick}
       />
 
       <ToolbarFooter
