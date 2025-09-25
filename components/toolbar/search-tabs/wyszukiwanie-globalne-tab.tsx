@@ -1,11 +1,19 @@
 "use client"
 
 import { useState } from "react"
-import { Button } from "../../ui/button"
-import { Label } from "../../ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../ui/select"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../ui/card"
-import { MaterialIcon } from "../../ui/material-icon"
+import {
+  Button,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Card,
+  CardContent,
+  Typography,
+  Box,
+  useTheme,
+} from "@mui/material"
+import { Public, Search } from "@mui/icons-material"
 
 interface WyszukiwanieGlobalneTabProps {
   onSearch: (type: string, data: any) => void
@@ -14,6 +22,7 @@ interface WyszukiwanieGlobalneTabProps {
 
 export function WyszukiwanieGlobalneTab({ onSearch, onZoom }: WyszukiwanieGlobalneTabProps) {
   const [selectedWarunek, setSelectedWarunek] = useState("")
+  const theme = useTheme()
 
   const handleSearch = () => {
     onSearch("globalne", { warunek: selectedWarunek })
@@ -24,39 +33,50 @@ export function WyszukiwanieGlobalneTab({ onSearch, onZoom }: WyszukiwanieGlobal
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <MaterialIcon name="public" size={20} />
-          Wyszukiwanie globalne
-        </CardTitle>
-        <CardDescription>Przeszukaj wszystkie warstwy w projekcie</CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        <div className="space-y-2">
-          <Label>Wybierz warunek</Label>
-          <Select value={selectedWarunek} onValueChange={setSelectedWarunek}>
-            <SelectTrigger>
-              <SelectValue placeholder="Wybierz z listy" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="wszystkie">Wszystkie warstwy</SelectItem>
-              <SelectItem value="widoczne">Tylko widoczne warstwy</SelectItem>
-              <SelectItem value="wybrane">Wybrane warstwy</SelectItem>
-              <SelectItem value="aktywne">Aktywne warstwy</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
+    <Card sx={{ backgroundColor: theme.palette.background.paper }}>
+      <CardContent sx={{ p: 3 }}>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1 }}>
+          <Public />
+          <Typography variant="h6">Wyszukiwanie globalne</Typography>
+        </Box>
+        <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+          Przeszukaj wszystkie warstwy w projekcie
+        </Typography>
 
-        <div className="flex gap-2">
-          <Button onClick={handleSearch} className="bg-orange-600 hover:bg-orange-700">
-            <MaterialIcon name="search" size={16} className="mr-2" />
+        <Box sx={{ mb: 3 }}>
+          <FormControl fullWidth size="small">
+            <InputLabel>Wybierz warunek</InputLabel>
+            <Select
+              value={selectedWarunek}
+              onChange={(e) => setSelectedWarunek(e.target.value)}
+              label="Wybierz warunek"
+            >
+              <MenuItem value="wszystkie">Wszystkie warstwy</MenuItem>
+              <MenuItem value="widoczne">Tylko widoczne warstwy</MenuItem>
+              <MenuItem value="wybrane">Wybrane warstwy</MenuItem>
+              <MenuItem value="aktywne">Aktywne warstwy</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
+
+        <Box sx={{ display: "flex", gap: 1 }}>
+          <Button
+            onClick={handleSearch}
+            variant="contained"
+            startIcon={<Search />}
+            sx={{
+              backgroundColor: theme.palette.warning.main,
+              "&:hover": {
+                backgroundColor: theme.palette.warning.dark,
+              },
+            }}
+          >
             Szukaj
           </Button>
-          <Button onClick={handleZoom} variant="outline">
+          <Button onClick={handleZoom} variant="outlined">
             Przybliż
           </Button>
-        </div>
+        </Box>
       </CardContent>
     </Card>
   )

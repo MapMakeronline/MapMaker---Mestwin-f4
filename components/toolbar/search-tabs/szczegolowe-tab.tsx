@@ -1,11 +1,20 @@
 "use client"
 
 import { useState } from "react"
-import { Button } from "../../ui/button"
-import { Label } from "../../ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../ui/select"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../ui/card"
-import { MaterialIcon } from "../../ui/material-icon"
+import {
+  Button,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Card,
+  CardContent,
+  Typography,
+  Box,
+  Grid,
+  useTheme,
+} from "@mui/material"
+import { Search } from "@mui/icons-material"
 
 interface SzczegoloweTabProps {
   onSearch: (type: string, data: any) => void
@@ -16,6 +25,7 @@ export function SzczegoloweTab({ onSearch, onShowInTable }: SzczegoloweTabProps)
   const [selectedWarstwa, setSelectedWarstwa] = useState("")
   const [selectedKolumna, setSelectedKolumna] = useState("")
   const [selectedWartosc, setSelectedWartosc] = useState("")
+  const theme = useTheme()
 
   const handleSearch = () => {
     onSearch("szczegółowe", {
@@ -34,71 +44,82 @@ export function SzczegoloweTab({ onSearch, onShowInTable }: SzczegoloweTabProps)
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <MaterialIcon name="search" size={20} />
-          Wyszukiwanie szczegółowe
-        </CardTitle>
-        <CardDescription>
+    <Card sx={{ backgroundColor: theme.palette.background.paper }}>
+      <CardContent sx={{ p: 3 }}>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1 }}>
+          <Search />
+          <Typography variant="h6">Wyszukiwanie szczegółowe</Typography>
+        </Box>
+        <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
           Wskaż warstwę, a następnie wybierz z listy wartości, według których chcesz przeszukać warstwę
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="space-y-2">
-            <Label>Wybierz warstwę</Label>
-            <Select value={selectedWarstwa} onValueChange={setSelectedWarstwa}>
-              <SelectTrigger>
-                <SelectValue placeholder="Wybierz warstwę" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="dzialki">Działki</SelectItem>
-                <SelectItem value="budynki">Budynki</SelectItem>
-                <SelectItem value="drogi">Drogi</SelectItem>
-                <SelectItem value="lasy">Lasy</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+        </Typography>
 
-          <div className="space-y-2">
-            <Label>Wybierz kolumnę</Label>
-            <Select value={selectedKolumna} onValueChange={setSelectedKolumna}>
-              <SelectTrigger>
-                <SelectValue placeholder="Wybierz kolumnę" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="nazwa">Nazwa</SelectItem>
-                <SelectItem value="typ">Typ</SelectItem>
-                <SelectItem value="powierzchnia">Powierzchnia</SelectItem>
-                <SelectItem value="wlasciciel">Właściciel</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+        <Grid container spacing={2} sx={{ mb: 3 }}>
+          <Grid item xs={12} md={4}>
+            <FormControl fullWidth size="small">
+              <InputLabel>Wybierz warstwę</InputLabel>
+              <Select
+                value={selectedWarstwa}
+                onChange={(e) => setSelectedWarstwa(e.target.value)}
+                label="Wybierz warstwę"
+              >
+                <MenuItem value="dzialki">Działki</MenuItem>
+                <MenuItem value="budynki">Budynki</MenuItem>
+                <MenuItem value="drogi">Drogi</MenuItem>
+                <MenuItem value="lasy">Lasy</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
 
-          <div className="space-y-2">
-            <Label>Wybierz wartość</Label>
-            <Select value={selectedWartosc} onValueChange={setSelectedWartosc}>
-              <SelectTrigger>
-                <SelectValue placeholder="Wybierz wartość" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="wartosc1">Wartość 1</SelectItem>
-                <SelectItem value="wartosc2">Wartość 2</SelectItem>
-                <SelectItem value="wartosc3">Wartość 3</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
+          <Grid item xs={12} md={4}>
+            <FormControl fullWidth size="small">
+              <InputLabel>Wybierz kolumnę</InputLabel>
+              <Select
+                value={selectedKolumna}
+                onChange={(e) => setSelectedKolumna(e.target.value)}
+                label="Wybierz kolumnę"
+              >
+                <MenuItem value="nazwa">Nazwa</MenuItem>
+                <MenuItem value="typ">Typ</MenuItem>
+                <MenuItem value="powierzchnia">Powierzchnia</MenuItem>
+                <MenuItem value="wlasciciel">Właściciel</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
 
-        <div className="flex gap-2">
-          <Button onClick={handleShowInTable} variant="outline">
+          <Grid item xs={12} md={4}>
+            <FormControl fullWidth size="small">
+              <InputLabel>Wybierz wartość</InputLabel>
+              <Select
+                value={selectedWartosc}
+                onChange={(e) => setSelectedWartosc(e.target.value)}
+                label="Wybierz wartość"
+              >
+                <MenuItem value="wartosc1">Wartość 1</MenuItem>
+                <MenuItem value="wartosc2">Wartość 2</MenuItem>
+                <MenuItem value="wartosc3">Wartość 3</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+        </Grid>
+
+        <Box sx={{ display: "flex", gap: 1 }}>
+          <Button onClick={handleShowInTable} variant="outlined">
             Pokaż w tabeli atrybutów
           </Button>
-          <Button onClick={handleSearch} className="bg-blue-600 hover:bg-blue-700">
+          <Button
+            onClick={handleSearch}
+            variant="contained"
+            sx={{
+              backgroundColor: theme.palette.info.main,
+              "&:hover": {
+                backgroundColor: theme.palette.info.dark,
+              },
+            }}
+          >
             Wyszukaj
           </Button>
-        </div>
+        </Box>
       </CardContent>
     </Card>
   )

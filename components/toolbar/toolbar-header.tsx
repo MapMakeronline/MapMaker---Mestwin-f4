@@ -1,5 +1,6 @@
 "use client"
 
+import { IconButton } from "@mui/material"
 import { MaterialIcon } from "@/components/ui/material-icon"
 
 interface ToolbarHeaderProps {
@@ -9,9 +10,18 @@ interface ToolbarHeaderProps {
 export function ToolbarHeader({ className = "" }: ToolbarHeaderProps) {
   return (
     <div className={`flex-shrink-0 flex flex-col items-center py-4 ${className}`}>
-      <button className="p-3 hover:bg-secondary/80 rounded text-destructive transition-colors" title="Strona główna">
+      <IconButton
+        color="error"
+        title="Strona główna"
+        sx={{
+          color: "error.main",
+          "&:hover": {
+            backgroundColor: "action.hover",
+          },
+        }}
+      >
         <MaterialIcon name="home" size={24} />
-      </button>
+      </IconButton>
     </div>
   )
 }

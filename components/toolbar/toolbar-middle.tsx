@@ -1,5 +1,6 @@
 "use client"
 
+import { IconButton } from "@mui/material"
 import { MaterialIcon } from "@/components/ui/material-icon"
 
 interface ToolbarMiddleProps {
@@ -19,37 +20,61 @@ export function ToolbarMiddle({
 }: ToolbarMiddleProps) {
   return (
     <div className={`flex-1 flex flex-col items-center gap-2 overflow-y-auto px-2 py-2 ${className}`}>
-      <button
-        className="p-3 hover:bg-secondary/80 rounded text-muted-foreground hover:text-foreground transition-colors"
+      <IconButton
         onClick={onWypisWyrysClick}
         title="Wypis i wyrys"
+        sx={{
+          color: "text.secondary",
+          "&:hover": {
+            color: "text.primary",
+            backgroundColor: "action.hover",
+          },
+        }}
       >
         <MaterialIcon name="description" size={24} />
-      </button>
+      </IconButton>
 
-      <button
-        className="p-3 hover:bg-secondary/80 rounded text-muted-foreground hover:text-foreground transition-colors"
+      <IconButton
         onClick={onIdentyfikacjaObiektuClick}
         title="Identyfikacja obiektu"
+        sx={{
+          color: "text.secondary",
+          "&:hover": {
+            color: "text.primary",
+            backgroundColor: "action.hover",
+          },
+        }}
       >
         <MaterialIcon name="info" size={24} />
-      </button>
+      </IconButton>
 
-      <button
-        className="p-3 hover:bg-secondary/80 rounded text-muted-foreground hover:text-foreground transition-colors"
+      <IconButton
         onClick={onWyszukiwanieClick}
         title="Wyszukiwanie"
+        sx={{
+          color: "text.secondary",
+          "&:hover": {
+            color: "text.primary",
+            backgroundColor: "action.hover",
+          },
+        }}
       >
         <MaterialIcon name="search" size={24} />
-      </button>
+      </IconButton>
 
-      <button
-        className="p-3 hover:bg-secondary/80 rounded text-muted-foreground hover:text-foreground transition-colors"
+      <IconButton
         onClick={onNarzedziaRysowaniaClick}
         title="Narzędzia rysowania"
+        sx={{
+          color: "text.secondary",
+          "&:hover": {
+            color: "text.primary",
+            backgroundColor: "action.hover",
+          },
+        }}
       >
         <MaterialIcon name="draw" size={24} />
-      </button>
+      </IconButton>
     </div>
   )
 }

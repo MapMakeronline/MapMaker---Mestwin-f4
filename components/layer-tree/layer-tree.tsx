@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { TextField, Checkbox, FormControl, Select, MenuItem, useTheme } from "@mui/material"
 import { MaterialIcon } from "@/components/ui/material-icon"
 
 interface LayerTreeProps {
@@ -40,6 +41,10 @@ export function LayerTree({ className = "", isVisible = true, onToggleVisibility
     "PROJEKT UCHWALONE STUDI...": false,
     "RASTRY - STUDIUM": false,
   })
+
+  const [searchQuery, setSearchQuery] = useState("")
+  const [selectedMap, setSelectedMap] = useState("Google Maps")
+  const theme = useTheme()
 
   const toggleLayer = (layerName: string) => {
     setExpandedLayers((prev) => ({
@@ -89,14 +94,36 @@ export function LayerTree({ className = "", isVisible = true, onToggleVisibility
             </button>
           </div>
 
-          {/* Search Bar */}
-          <div className="relative">
-            <input
-              type="text"
-              placeholder="Znajdź warstwę lub grupę"
-              className="w-full bg-gray-700 text-white px-3 py-2 rounded text-sm placeholder-gray-400"
-            />
-          </div>
+          {/* Search Bar - Replaced native input with MUI TextField */}
+          <TextField
+            placeholder="Znajdź warstwę lub grupę"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            size="small"
+            fullWidth
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                backgroundColor: "rgba(55, 65, 81, 1)",
+                color: "white",
+                "& fieldset": {
+                  borderColor: "rgba(75, 85, 99, 1)",
+                },
+                "&:hover fieldset": {
+                  borderColor: "rgba(107, 114, 128, 1)",
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: "rgba(147, 197, 253, 1)",
+                },
+              },
+              "& .MuiOutlinedInput-input": {
+                color: "white",
+                "&::placeholder": {
+                  color: "rgba(156, 163, 175, 1)",
+                  opacity: 1,
+                },
+              },
+            }}
+          />
         </div>
 
         {/* Layers Section - Scrollable middle section */}
@@ -104,11 +131,17 @@ export function LayerTree({ className = "", isVisible = true, onToggleVisibility
           {/* Special Layers */}
           <div className="mb-2">
             <div className="flex items-center gap-2 py-1 px-2 hover:bg-gray-700 rounded text-sm">
-              <input
-                type="checkbox"
+              <Checkbox
                 checked={checkedLayers["Obszar Rewitalizacji"]}
                 onChange={() => toggleLayerCheck("Obszar Rewitalizacji")}
-                className="w-4 h-4"
+                size="small"
+                sx={{
+                  color: "rgba(156, 163, 175, 1)",
+                  "&.Mui-checked": {
+                    color: "rgba(59, 130, 246, 1)",
+                  },
+                  padding: 0,
+                }}
               />
               <span className="text-red-400">⟲</span>
               <span>Obszar Rewitalizacji</span>
@@ -150,11 +183,17 @@ export function LayerTree({ className = "", isVisible = true, onToggleVisibility
                   </button>
                 )}
                 {!layer.hasChildren && <div className="w-4" />}
-                <input
-                  type="checkbox"
+                <Checkbox
                   checked={checkedLayers[layer.name] || false}
                   onChange={() => toggleLayerCheck(layer.name)}
-                  className="w-4 h-4"
+                  size="small"
+                  sx={{
+                    color: "rgba(156, 163, 175, 1)",
+                    "&.Mui-checked": {
+                      color: "rgba(59, 130, 246, 1)",
+                    },
+                    padding: 0,
+                  }}
                 />
                 <span className="text-blue-400">{layer.icon}</span>
                 <span className="flex-1">{layer.name}</span>
@@ -177,11 +216,17 @@ export function LayerTree({ className = "", isVisible = true, onToggleVisibility
                         key={childLayer}
                         className="flex items-center gap-2 py-1 px-2 hover:bg-gray-700 rounded text-sm"
                       >
-                        <input
-                          type="checkbox"
+                        <Checkbox
                           checked={checkedLayers[childLayer] || false}
                           onChange={() => toggleLayerCheck(childLayer)}
-                          className="w-4 h-4"
+                          size="small"
+                          sx={{
+                            color: "rgba(156, 163, 175, 1)",
+                            "&.Mui-checked": {
+                              color: "rgba(59, 130, 246, 1)",
+                            },
+                            padding: 0,
+                          }}
                         />
                         <span className="text-red-400">⟲</span>
                         <span className="flex-1">{childLayer}</span>
@@ -227,9 +272,35 @@ export function LayerTree({ className = "", isVisible = true, onToggleVisibility
 
           <div className="mt-4">
             <h4 className="text-sm font-semibold mb-2">Wybór mapy podkładowej</h4>
-            <select className="w-full bg-gray-700 text-white px-3 py-1 rounded text-sm">
-              <option>Google Maps</option>
-            </select>
+            <FormControl fullWidth size="small">
+              <Select
+                value={selectedMap}
+                onChange={(e) => setSelectedMap(e.target.value)}
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    backgroundColor: "rgba(55, 65, 81, 1)",
+                    color: "white",
+                    "& fieldset": {
+                      borderColor: "rgba(75, 85, 99, 1)",
+                    },
+                    "&:hover fieldset": {
+                      borderColor: "rgba(107, 114, 128, 1)",
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: "rgba(147, 197, 253, 1)",
+                    },
+                  },
+                  "& .MuiSelect-select": {
+                    color: "white",
+                  },
+                  "& .MuiSvgIcon-root": {
+                    color: "white",
+                  },
+                }}
+              >
+                <MenuItem value="Google Maps">Google Maps</MenuItem>
+              </Select>
+            </FormControl>
           </div>
 
           <div className="mt-2 text-xs text-gray-400">Rozpocznij poradnik</div>

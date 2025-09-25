@@ -1,8 +1,10 @@
 "use client"
 
 import type React from "react"
+import { useState } from "react"
 
 import { Modal } from "@/components/ui/modal"
+import { TextField, Button, Typography, Box, useTheme } from "@mui/material"
 
 interface KontaktModalProps {
   isOpen: boolean
@@ -10,11 +12,25 @@ interface KontaktModalProps {
 }
 
 export function KontaktModal({ isOpen, onClose }: KontaktModalProps) {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  })
+  const theme = useTheme()
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     // Handle form submission
-    console.log("Formularz kontaktowy wysłany")
+    console.log("Formularz kontaktowy wysłany", formData)
     onClose()
+  }
+
+  const handleInputChange = (field: string) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData((prev) => ({
+      ...prev,
+      [field]: e.target.value,
+    }))
   }
 
   const SocialIcon = ({ children, href, title }: { children: React.ReactNode; href: string; title: string }) => (
@@ -31,7 +47,7 @@ export function KontaktModal({ isOpen, onClose }: KontaktModalProps) {
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Kontakt z MapMaker" size="md">
-      <div className="space-y-6">
+      <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
         {/* Social Media Icons */}
         <div className="flex justify-center gap-3 flex-wrap">
           <SocialIcon href="https://facebook.com" title="Facebook">
@@ -83,61 +99,65 @@ export function KontaktModal({ isOpen, onClose }: KontaktModalProps) {
           </SocialIcon>
         </div>
 
-        <div className="text-center">
-          <h3 className="text-lg font-semibold mb-4">Skontaktuj się z MapMakerem</h3>
-        </div>
+        <Box sx={{ textAlign: "center" }}>
+          <Typography variant="h5" fontWeight="600">
+            Skontaktuj się z MapMakerem
+          </Typography>
+        </Box>
 
         {/* Contact Form */}
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label htmlFor="name" className="block text-sm font-medium text-muted-foreground mb-2">
-              Imię i nazwisko
-            </label>
-            <input
-              type="text"
-              id="name"
-              className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-              placeholder="Wpisz swoje imię i nazwisko"
-              required
-            />
-          </div>
+        <Box component="form" onSubmit={handleSubmit} sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+          <TextField
+            label="Imię i nazwisko"
+            value={formData.name}
+            onChange={handleInputChange("name")}
+            placeholder="Wpisz swoje imię i nazwisko"
+            required
+            fullWidth
+            variant="outlined"
+          />
 
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-muted-foreground mb-2">
-              E-mail
-            </label>
-            <input
-              type="email"
-              id="email"
-              className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-              placeholder="Wpisz adres e-mail"
-              required
-            />
-          </div>
+          <TextField
+            label="E-mail"
+            type="email"
+            value={formData.email}
+            onChange={handleInputChange("email")}
+            placeholder="Wpisz adres e-mail"
+            required
+            fullWidth
+            variant="outlined"
+          />
 
-          <div>
-            <label htmlFor="message" className="block text-sm font-medium text-muted-foreground mb-2">
-              Treść wiadomości
-            </label>
-            <textarea
-              id="message"
-              rows={4}
-              className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent resize-none"
-              placeholder="Treść Twojej wiadomości do Nas"
-              required
-            />
-          </div>
+          <TextField
+            label="Treść wiadomości"
+            value={formData.message}
+            onChange={handleInputChange("message")}
+            placeholder="Treść Twojej wiadomości do Nas"
+            required
+            fullWidth
+            multiline
+            rows={4}
+            variant="outlined"
+          />
 
-          <div className="flex justify-center pt-4">
-            <button
+          <Box sx={{ display: "flex", justifyContent: "center", pt: 2 }}>
+            <Button
               type="submit"
-              className="px-8 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors font-medium"
+              variant="contained"
+              size="large"
+              sx={{
+                px: 4,
+                backgroundColor: theme.palette.primary.main,
+                "&:hover": {
+                  backgroundColor: theme.palette.primary.dark,
+                },
+              }}
             >
               Wyślij
-            </button>
-          </div>
-        </form>
-      </div>
+            </Button>
+          </Box>
+        </Box>
+      </Box>
     </Modal>
   )
 }
