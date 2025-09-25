@@ -20,8 +20,14 @@ import VisibilityIcon from "@mui/icons-material/Visibility"
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff"
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
 import ChevronRightIcon from "@mui/icons-material/ChevronRight"
+import PlaceIcon from "@mui/icons-material/Place"
+import TimelineIcon from "@mui/icons-material/Timeline"
+import CropFreeIcon from "@mui/icons-material/CropFree"
+import ImageIcon from "@mui/icons-material/Image"
+import PublicIcon from "@mui/icons-material/Public"
+import FolderIcon from "@mui/icons-material/Folder"
 import { MaterialIcon } from "@/components/ui/material-icon"
-import type { LayerNode } from "@/types/layers"
+import type { LayerNode, LayerType } from "@/types/layers"
 
 type Props = {
   data: LayerNode[]
@@ -29,6 +35,25 @@ type Props = {
   className?: string
   isVisible?: boolean
   onTogglePanel?: () => void
+}
+
+const getLayerTypeIcon = (type?: LayerType) => {
+  switch (type) {
+    case "point":
+      return <PlaceIcon sx={{ fontSize: 16, color: "#10b981" }} />
+    case "line":
+      return <TimelineIcon sx={{ fontSize: 16, color: "#3b82f6" }} />
+    case "polygon":
+      return <CropFreeIcon sx={{ fontSize: 16, color: "#f59e0b" }} />
+    case "raster":
+      return <ImageIcon sx={{ fontSize: 16, color: "#8b5cf6" }} />
+    case "wms":
+      return <PublicIcon sx={{ fontSize: 16, color: "#ef4444" }} />
+    case "group":
+      return <FolderIcon sx={{ fontSize: 16, color: "#6b7280" }} />
+    default:
+      return <FolderIcon sx={{ fontSize: 16, color: "#6b7280" }} />
+  }
 }
 
 export default function LayerTree({ data, onToggleVisibility, className, isVisible = true, onTogglePanel }: Props) {
@@ -103,6 +128,8 @@ export default function LayerTree({ data, onToggleVisibility, className, isVisib
                 mr: 1,
               }}
             />
+
+            <ListItemIcon sx={{ minWidth: 20, mr: 1 }}>{getLayerTypeIcon(node.type)}</ListItemIcon>
 
             <ListItemText
               primary={node.name}

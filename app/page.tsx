@@ -18,30 +18,35 @@ const sampleLayerData: LayerNode[] = [
     id: "obszar-rewitalizacji",
     name: "Obszar Rewitalizacji",
     visible: true,
+    type: "polygon", // Added layer type for polygon areas
     layerIds: ["rewitalizacja-layer"],
   },
   {
     id: "dzialki",
     name: "Działki",
     visible: true,
+    type: "group", // Added group type for parent layers
     layerIds: ["dzialki-layer"],
     children: [
       {
         id: "dzialki-starost-1",
         name: "(< 1:10000) Działki starost...",
         visible: false,
+        type: "polygon", // Added polygon type for cadastral parcels
         layerIds: ["dzialki-starost-1-layer"],
       },
       {
         id: "kowr-dzialki",
         name: "KOWR - działki",
         visible: false,
+        type: "polygon", // Added polygon type for KOWR parcels
         layerIds: ["kowr-dzialki-layer"],
       },
       {
         id: "dzialki-starost-2",
         name: "(< 1:10000) Działki starost...",
         visible: false,
+        type: "polygon", // Added polygon type for cadastral parcels
         layerIds: ["dzialki-starost-2-layer"],
       },
     ],
@@ -50,6 +55,7 @@ const sampleLayerData: LayerNode[] = [
     id: "miejscowe-plany",
     name: "MIEJSCOWE PLANY ZAGOSPOD...",
     visible: true,
+    type: "polygon", // Added polygon type for zoning plans
     layerIds: ["miejscowe-plany-layer"],
     children: [],
   },
@@ -57,6 +63,7 @@ const sampleLayerData: LayerNode[] = [
     id: "rastry-plany",
     name: "RASTRY - MIEJSCOWE PLANY Z...",
     visible: false,
+    type: "raster", // Added raster type for plan rasters
     layerIds: ["rastry-plany-layer"],
     children: [],
   },
@@ -64,12 +71,14 @@ const sampleLayerData: LayerNode[] = [
     id: "granice",
     name: "Granice",
     visible: false,
+    type: "line", // Added line type for boundaries
     layerIds: ["granice-layer"],
   },
   {
     id: "punkty-adresowe",
     name: "PUNKTY ADRESOWE, BUDYNKI...",
     visible: false,
+    type: "point", // Added point type for address points
     layerIds: ["punkty-adresowe-layer"],
     children: [],
   },
@@ -77,30 +86,35 @@ const sampleLayerData: LayerNode[] = [
     id: "obszary-ochronne",
     name: "OBSZARY OCHRONNE",
     visible: false,
+    type: "polygon", // Added polygon type for protected areas
     layerIds: ["obszary-ochronne-layer"],
   },
   {
     id: "obiekty-zabytkowe",
     name: "OBIEKTY ZABYTKOWE, ATRAKCJE...",
     visible: false,
+    type: "point", // Added point type for heritage objects
     layerIds: ["obiekty-zabytkowe-layer"],
   },
   {
     id: "infrastruktura",
     name: "INFRASTRUKTURA TECHNICZN...",
     visible: false,
+    type: "line", // Added line type for technical infrastructure
     layerIds: ["infrastruktura-layer"],
   },
   {
     id: "wlasnosc-dzialek",
     name: "WŁASNOŚĆ DZIAŁEK",
     visible: false,
+    type: "polygon", // Added polygon type for parcel ownership
     layerIds: ["wlasnosc-dzialek-layer"],
   },
   {
     id: "uchwalone-studium",
     name: "UCHWALONE STUDIUM UWAR...",
     visible: false,
+    type: "polygon", // Added polygon type for adopted study
     layerIds: ["uchwalone-studium-layer"],
     children: [],
   },
@@ -108,6 +122,7 @@ const sampleLayerData: LayerNode[] = [
     id: "projekt-studium",
     name: "PROJEKT UCHWALONE STUDI...",
     visible: false,
+    type: "polygon", // Added polygon type for study project
     layerIds: ["projekt-studium-layer"],
     children: [],
   },
@@ -115,6 +130,7 @@ const sampleLayerData: LayerNode[] = [
     id: "rastry-studium",
     name: "RASTRY - STUDIUM",
     visible: false,
+    type: "raster", // Added raster type for study rasters
     layerIds: ["rastry-studium-layer"],
   },
 ]
